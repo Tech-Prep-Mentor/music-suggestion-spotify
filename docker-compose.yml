@@ -1,0 +1,27 @@
+version: '3.1'
+
+services:
+  postgres:
+
+    image: postgres:16.0
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Harmony_love04
+      POSTGRES_DB: musicdb
+
+
+
+  spring-boot-app:
+    image: openjdk:16
+    build:
+        context: .
+        dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    volumes:
+      - ./target:/app
+    command: java -jar /app/music-0.0.1-SNAPSHOT.jar
